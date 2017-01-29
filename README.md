@@ -25,3 +25,7 @@ The greedy solution takes time to implement and is far from optimal but it helps
 I lost litteraly most of my time tracking the bug, it might be easier in group were some peoples can test part of the code while other redact the parts that are still missing.
 
 Some functions to update a single value in a list/array or get the index of the min/max/verify_predicate would have been useful.
+
+## Solutions 
+
+I found a [post](https://zestedesavoir.com/forums/sujet/2317/google-hash-code-edition-2015/?page=2) on a forum saying that two selected teams used a similar greedy algorithm. It appears to be the main approach to solved that problem.
