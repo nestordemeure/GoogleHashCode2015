@@ -34,7 +34,6 @@ let evaluation poolNum rowNum (rows : Row array) =
 
 [<EntryPoint>]
 let main argv =
-    //printfn "%A" argv
     // import
     let inPath = "../dc.in"
     let rows,serveurs,poolNum = import inPath
@@ -44,5 +43,5 @@ let main argv =
     let score = evaluation poolNum rows.Length newRows
     printfn "score : %d" score
     //export 
-    export "../output.txt" poolNum rows.Length newRows
+    export "../output.txt" poolNum rows.Length serveurs.Length newRows
     0 // return an integer exit code
