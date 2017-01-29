@@ -36,12 +36,12 @@ let evaluation poolNum rowNum (rows : Row array) =
 let main argv =
     // import
     let inPath = "../dc.in"
-    let rows,serveurs,poolNum = import inPath
+    let rows,servers,poolNum = import inPath
     // solution
-    let newRows = solution rows serveurs poolNum
+    let newRows = solution rows servers poolNum
     // evaluation
     let score = evaluation poolNum rows.Length newRows
     printfn "score : %d" score
     //export 
-    export "../output.txt" poolNum rows.Length serveurs.Length newRows
+    export "../output.txt" poolNum rows.Length servers.Length newRows
     0 // return an integer exit code
