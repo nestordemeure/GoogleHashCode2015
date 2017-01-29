@@ -22,7 +22,7 @@ Changing the criteria for the greedy algorithm from *bigger first* to *(most_eff
 
 The greedy solution takes time to implement and is far from optimal but it helps to debug everything and, at least, gives a solution.
 
-I lost literally most of my time tracking the bug, it might be easier in group were some peoples can test part of the code while other redact the parts that are still missing.
+I literally lost most of my time tracking the bug, it might be easier in group were some peoples can test part of the code while other redact the parts that are still missing.
 
 Some functions to update a single value in a list/array or get the index of the min/max/verify_predicate would have been useful.
 
