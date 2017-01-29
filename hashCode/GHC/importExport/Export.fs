@@ -9,15 +9,8 @@ open GHC.Domain
 //-------------------------------------------------------------------------------------------------
 // EXPORTATION
 
-let export path poolNum rowNum serverNum (rows : Row array) =
-    let servers = Array.create serverNum None
-    for r = 0 to rowNum - 1 do 
-        let row = rows.[r]
-        for slot in row do 
-            let mutable slotIndex = slot.index
-            for server in slot.servers do 
-                servers.[server.id] <- Some (r, slotIndex, server.pool)
-                slotIndex <- slotIndex + server.size
-    servers
-    |> Array.map (function None -> "x" | Some (r,s,p) -> sprintf "%d %d %d" r s p)
-    |> fun lines -> File.WriteAllLines(path, lines)
+let export path poolNum rowNum serverNum (servers : Server array) =
+   let allServers = Array.create serverNum "x"
+   for server in servers do 
+      allServers.[server.id] <- sprintf "%d %d %d" server.row server.slot server.pool
+   File.WriteAllLines(path, allServers)

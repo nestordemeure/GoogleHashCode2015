@@ -44,6 +44,6 @@ let import path =
          for s = (deadSlotNum+1) to (deadSlotNum+1) + (serverNum-1) do
             let size,capa = sscanf "%d %d" text.[s]
             let id = s - (deadSlotNum+1)
-            yield {size = size; capa = capa; id = id; pool = -1}
+            yield {id = id; size = size; capa = capa; pool = -1; row = -1 ; slot = -1}
       |]
    rows,serveurs,poolNum

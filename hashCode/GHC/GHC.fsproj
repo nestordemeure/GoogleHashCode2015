@@ -53,6 +53,7 @@
     <Compile Include="importExport/Import.fs" />
     <Compile Include="importExport/Export.fs" />
     <Compile Include="solutions/SolveBugged.fs" />
+    <Compile Include="solutions/SolveGreedy.fs" />
     <Compile Include="solutions/Solve.fs" />
     <Compile Include="GHC.fs" />
   </ItemGroup>

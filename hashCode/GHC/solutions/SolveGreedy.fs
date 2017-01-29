@@ -1,4 +1,4 @@
-module GHC.Solve
+module GHC.SolveGreedy
 
 open ExtCore.Collections
 
@@ -7,7 +7,7 @@ open GHC.Extensions.Common
 open GHC.Domain
 
 //-------------------------------------------------------------------------------------------------
-// GREEDY SERVEUR INSERTION
+// SERVEUR INSERTION
 
 /// how tightly would the server fit in this interval (returns System.Int32.MaxValue if it cannot fit)
 let fitInInterval server interval = 
@@ -42,33 +42,17 @@ let insertServer rows serveur =
       rows.[i] <- newBestRow
 
 //-------------------------------------------------------------------------------------------------
-// DEALS WITH POOLS ONLY
-
-let solutionPools poolNum rowNum servers =
-   let pools = Array.init poolNum (fun _ -> Array.create rowNum 0)
-   let servers = Array.sortByDescending (fun se -> se.capa) servers // best first
-   [|
-      for server in servers do 
-      let pool = Array.minBy capaOfPool pools
-      let poolIndex = Array.findIndex ((=) pool) pools
-      pool.[server.row] <- server.capa
-      yield {server with pool=poolIndex }
-   |]
-
-//-------------------------------------------------------------------------------------------------
 // SOLUTION
 
 /// a rough greedy solution
-let solutionGreedy (rows : Row array) (servers:Server array) poolNum =
+let solutionGreedy (rows : Row array) (serveurs:Server array) poolNum =
+   let rng = System.Random()
    let newRows = Array.copy rows
-   // put servers in the rows
-   servers
+   serveurs
    |> Array.sortByDescending (fun se -> se.size) // bigger first
+   |> Array.map (fun se -> {se with pool = rng.Next(poolNum) }) // random pool, no time to be clever
    |> Array.iter (insertServer newRows)
-   // put pools in the servers
    newRows
-   |> serveursOfRows
-   |> solutionPools poolNum rows.Length
 
 
 
