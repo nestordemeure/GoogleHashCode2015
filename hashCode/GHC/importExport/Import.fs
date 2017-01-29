@@ -11,15 +11,16 @@ open GHC.Domain
 
 //-------------------------------------------------------------------------------------------------
 
-let rec killSlot slot (row : Row) =
+/// take a slotIndex and a row, 
+/// output a copy of the row in which the interval containing the index has been cut into two parts (at most)
+let rec killSlot slotIndex (row : Row) =
    match row with 
-   | [] -> 
-      row 
-   | s::q when (s.index + s.length - 1 < slot) || (s.index > slot) -> 
-      s :: (killSlot slot q)
+   | [] -> row 
+   | s::q when (s.index + s.length - 1 < slotIndex) || (s.index > slotIndex) -> 
+      s :: (killSlot slotIndex q)
    | s::q -> 
-      let s1 = {index=s.index ; length = slot-s.index ; serveurs=[]}
-      let s2 = {index=slot+1 ; length = s.length - s1.length - 1 ; serveurs=[]}
+      let s1 = {index=s.index ; length = slotIndex-s.index ; serveurs=[]}
+      let s2 = {index=slotIndex+1 ; length = s.length - s1.length - 1 ; serveurs=[]}
       match s1.length=0, s2.length=0 with 
       | true, true -> q
       | true, false -> s2::q 
@@ -32,18 +33,17 @@ let rec killSlot slot (row : Row) =
 let import path =
    let text = File.ReadAllLines(path)
    let (rowNum,slotNum,deadSlotNum,poolNum,serverNum) = sscanf "%d %d %d %d %d" text.[0]
-
+   // each row starts with a single interval that will be divided as the deadslot are taken into account 
    let rows = Array.create rowNum [{index=0 ; length=slotNum ; serveurs=[]}]
    for u = 1 to deadSlotNum do 
       let row,slot = sscanf "%d %d" text.[u]
       rows.[row] <- killSlot slot rows.[row]
-
+   // serveurs are build one after the other
    let serveurs =
       [|
-         for s = deadSlotNum+1 to deadSlotNum+1+serverNum-1 do
+         for s = (deadSlotNum+1) to (deadSlotNum+1) + (serverNum-1) do
             let size,capa = sscanf "%d %d" text.[s]
-            let id = s-(deadSlotNum+1)
-            yield {size=size;capa=capa;id=id;pool= -1}
+            let id = s - (deadSlotNum+1)
+            yield {size = size; capa = capa; id = id; pool = -1}
       |]
-
    rows,serveurs,poolNum
