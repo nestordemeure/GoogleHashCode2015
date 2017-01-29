@@ -19,7 +19,7 @@ let evaluation poolNum rowNum (rows : Row array) =
     for r = 0 to rowNum - 1 do 
         let row = rows.[r]
         for slot in row do 
-            for serveur in slot.serveurs do 
+            for serveur in slot.servers do 
                 capa.[serveur.pool].[r] <- capa.[serveur.pool].[r] + serveur.capa
 
     let mutable garan = System.Int32.MaxValue

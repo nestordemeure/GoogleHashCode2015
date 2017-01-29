@@ -27,10 +27,7 @@ let updateCapa row pool capaServer capa =
 
 type Server = { size : int ; capa : int ; id : int ; pool : int }
 
-type Interval = { index : int ; length : int ; serveurs : Server list }
+type Interval = { index : int ; length : int ; servers : Server list }
+
 type Row = Interval list
 
-//-------------------------------------------------------------------------------------------------
-
-type Alloc = { row : int ; slot : int ; pool : int }
-type Solution = (Alloc option) array

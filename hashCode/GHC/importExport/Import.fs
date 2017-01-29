@@ -19,8 +19,8 @@ let rec killSlot slotIndex (row : Row) =
    | s::q when (s.index + s.length - 1 < slotIndex) || (s.index > slotIndex) -> 
       s :: (killSlot slotIndex q)
    | s::q -> 
-      let s1 = {index=s.index ; length = slotIndex-s.index ; serveurs=[]}
-      let s2 = {index=slotIndex+1 ; length = s.length - s1.length - 1 ; serveurs=[]}
+      let s1 = {index = s.index; length = slotIndex - s.index; servers = [] }
+      let s2 = {index = slotIndex + 1; length = s.length - s1.length - 1; servers = [] }
       match s1.length=0, s2.length=0 with 
       | true, true -> q
       | true, false -> s2::q 
@@ -34,7 +34,7 @@ let import path =
    let text = File.ReadAllLines(path)
    let (rowNum,slotNum,deadSlotNum,poolNum,serverNum) = sscanf "%d %d %d %d %d" text.[0]
    // each row starts with a single interval that will be divided as the deadslot are taken into account 
-   let rows = Array.create rowNum [{index=0 ; length=slotNum ; serveurs=[]}]
+   let rows = Array.create rowNum [{index=0 ; length=slotNum ; servers=[]}]
    for u = 1 to deadSlotNum do 
       let row,slot = sscanf "%d %d" text.[u]
       rows.[row] <- killSlot slot rows.[row]

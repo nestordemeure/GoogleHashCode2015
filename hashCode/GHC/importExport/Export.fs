@@ -15,7 +15,7 @@ let export path poolNum rowNum serverNum (rows : Row array) =
         let row = rows.[r]
         for slot in row do 
             let mutable slotIndex = slot.index
-            for server in slot.serveurs do 
+            for server in slot.servers do 
                 servers.[server.id] <- Some (r, slotIndex, server.pool)
                 slotIndex <- slotIndex + server.size
     servers

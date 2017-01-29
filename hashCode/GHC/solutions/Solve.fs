@@ -7,25 +7,33 @@ open GHC.Extensions.Common
 open GHC.Domain
 
 //-------------------------------------------------------------------------------------------------
+// SERVEUR INSERTION
 
-let fitInSlot serveur slot = 
-      if serveur.size > slot.length then System.Int32.MaxValue else slot.length - serveur.size
+/// how tightly would the server fit in this interval (returns System.Int32.MaxValue if it cannot fit)
+let fitInInterval server interval = 
+      if server.size > interval.length then System.Int32.MaxValue else interval.length - server.size
 
-let fitInRow serveur (row : Row) = 
-      let bestSlot = List.minBy (fitInSlot serveur) row
-      fitInSlot serveur bestSlot
+/// how tightly would the server fit in this row (returns System.Int32.MaxValue if it cannot fit)
+let fitInRow server (row : Row) = 
+      row 
+      |> List.map (fitInInterval server)
+      |> List.min
 
-let insertServerInRow serveur row =
-      let bestSlot = List.minBy (fitInSlot serveur) row
+//-----
+
+/// take some intervals and a server, put the serveur where it fit the most tightly
+let insertServerInRow server row =
+      let bestInterval = List.minBy (fitInInterval server) row
       let rec insert row = 
             match row with 
             | [] -> []
-            | slot::q when slot <> bestSlot -> 
-                  slot::(insert q)
-            | slot::q ->
-                  {slot with length = slot.length - serveur.size ; serveurs = serveur::slot.serveurs}::q
+            | inter::q when inter <> bestInterval -> 
+                  inter::(insert q)
+            | inter::q ->
+                  {inter with length = inter.length - server.size ; servers = server::inter.servers}::q
       insert row
 
+/// take some rows and a server, put the serveur where it fit the most tightly
 let insertServer rows serveur =
       let bestRow = Array.minBy (fitInRow serveur) rows 
       if fitInRow serveur bestRow <> System.Int32.MaxValue then 
@@ -36,7 +44,7 @@ let insertServer rows serveur =
 //-------------------------------------------------------------------------------------------------
 // SOLUTION
 
-/// solution
+/// a rough greedy solution
 let solutionGreedy (rows : Row array) (serveurs:Server array) poolNum =
       let rng = System.Random()
       let newRows = Array.copy rows

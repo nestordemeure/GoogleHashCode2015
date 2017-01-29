@@ -28,7 +28,7 @@ let buildStates server state poolNum =
                let newSlot = {slot with length = slot.length - server.size}
                [
                   for p = 0 to poolNum - 1 do
-                     yield ( p, {newSlot with serveurs = {server with pool=p}::slot.serveurs}::q )
+                     yield ( p, {newSlot with servers = {server with pool=p}::slot.servers}::q )
                ]
          ins row      
 
