@@ -44,22 +44,41 @@ let insertServer rows serveur =
 //-------------------------------------------------------------------------------------------------
 // DEALS WITH POOLS ONLY
 
+/// returns the pool that has the biggest need for capacity 
+/// (and whose maximum is not in the targetRow)
+let getWorstPool (pools: int[][]) targetRow =
+   let mutable worstP = 0
+   let mutable worstCapa = System.Int32.MaxValue
+   for p = 0 to pools.Length - 1 do 
+      let pool = pools.[p]
+      let pMax = Array.max pool
+      if Array.existsi (fun r x -> x=pMax && r<>targetRow) pool then
+         let pSum = Array.sum pool
+         let capa = pSum - pMax
+         if capa < worstCapa then 
+            worstP <- p
+            worstCapa <- capa
+   worstP
+
+//-----
+
+/// gives a pool to each server
+/// servers are given, in order, to pools that need them the most
 let solutionPools poolNum rowNum servers =
    let pools = Array.init poolNum (fun _ -> Array.create rowNum 0)
    let servers = Array.sortByDescending (fun se -> se.capa) servers // best first
    [|
       for server in servers do 
-      let pool = Array.minBy capaOfPool pools
-      let poolIndex = Array.findIndex ((=) pool) pools
-      pool.[server.row] <- server.capa
-      yield {server with pool=poolIndex }
+         let pool = getWorstPool pools server.row
+         pools.[pool].[server.row] <- pools.[pool].[server.row] + server.capa
+         yield {server with pool = pool}
    |]
 
 //-------------------------------------------------------------------------------------------------
 // SOLUTION
 
 /// a rough greedy solution
-let solutionGreedy (rows : Row array) (servers:Server array) poolNum =
+let solutionTwoPhases (rows : Row array) (servers:Server array) poolNum =
    let newRows = Array.copy rows
    // put servers in the rows
    servers

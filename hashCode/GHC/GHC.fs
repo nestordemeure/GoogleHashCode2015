@@ -32,7 +32,7 @@ let main argv =
    let inPath = "../dc.in"
    let rows,servers,poolNum = import inPath
    // solution
-   let newServers = solutionGreedy rows servers poolNum
+   let newServers = solutionTwoPhases rows servers poolNum
    // evaluation
    let score = evaluation poolNum rows.Length newServers
    printfn "score : %d" score

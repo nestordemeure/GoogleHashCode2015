@@ -15,3 +15,5 @@ The problem could have been cut into two parts to make it more efficient to solv
 The greedy solution takes time to implement and will not bring many points but it helps debugging everything but the solver and making sure one has some points.
 
 I lost litteraly most of my time tracking the bug, it might be easier in group were some peoples can test part of the code while other redact the parts that are still missing.
+
+Some functions to update a single value in a list/array or get the index of the min/max/verify_predicate would have been useful.

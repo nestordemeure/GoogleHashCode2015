@@ -28,5 +28,13 @@ module Array =
       a.[i] <- a.[j]
       a.[j] <- temp
 
+   let existsi predicate (a : 'T array) =
+      let mutable i = 0
+      let mutable doesExists = false
+      while (i < a.Length) && (not doesExists) do 
+         doesExists <- predicate i a.[i]
+         i <- i+1
+      doesExists
+
 //-------------------------------------------------------------------------------------------------
 
