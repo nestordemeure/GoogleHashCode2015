@@ -6,11 +6,17 @@ I tried the problem in conditions (4h to produce the best score possible) but wa
 
 The greedy solution gave a result worth **136points** (I would have needed 360points to be qualified).
 
-## Notes
+## Extended round 
 
-The problem could have been cut into two parts to make it more efficient to solve :
+I will try to produce a correct solution (while still not peeking a other participants solutions nor giving myself much time to code).
+
+One can cut the problem into two parts to make it easier to solve :
 - putting servers in the datacenter to maximise the total capacity (variation of the *knapsack problem*)
-- putting the servers into pools to maximise the garanted capacity (*longest task first scheduling* should give a resonable solution)
+- putting the servers into pools to maximise the garanted capacity (using the *longest task first scheduling*)
+
+Selecting pools using an approach akind to *longest task first scheduling* was enough to get **314points**.
+
+## Notes
 
 The greedy solution takes time to implement and will not bring many points but it helps debugging everything but the solver and making sure one has some points.
 

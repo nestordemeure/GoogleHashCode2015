@@ -88,6 +88,3 @@ let solutionTwoPhases (rows : Row array) (servers:Server array) poolNum =
    newRows
    |> serveursOfRows
    |> solutionPools poolNum rows.Length
-
-
-
