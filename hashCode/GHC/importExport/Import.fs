@@ -37,7 +37,7 @@ let import path =
    for u = 1 to deadSlotNum do 
       let row,slot = sscanf "%d %d" text.[u]
       rows.[row] <- killSlot slot rows.[row]
-
+      
    let serveurs =
       [|
          for s = deadSlotNum+1 to deadSlotNum+1+serverNum-1 do

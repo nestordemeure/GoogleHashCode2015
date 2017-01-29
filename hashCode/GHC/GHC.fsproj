@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Name>GHC</Name>
@@ -52,6 +52,7 @@
     <Compile Include="Domain.fs" />
     <Compile Include="importExport/Import.fs" />
     <Compile Include="importExport/Export.fs" />
+    <Compile Include="solutions/SolveBugged.fs" />
     <Compile Include="solutions/Solve.fs" />
     <Compile Include="GHC.fs" />
   </ItemGroup>
