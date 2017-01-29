@@ -44,5 +44,5 @@ let main argv =
     let score = evaluation poolNum rows.Length newRows
     printfn "score : %d" score
     //export 
-    //export "../output.txt" (Array.ofList sol.rows)
+    export "../output.txt" poolNum rows.Length newRows
     0 // return an integer exit code

@@ -19,6 +19,16 @@ let listToString sep (l : string list) =
 //-------------------------------------------------------------------------------------------------
 // EXPORTATION
 
-let export path lines =
-   //File.WriteAllText(path, text)
-   File.WriteAllLines(path, lines)
+let export path poolNum rowNum (rows : Row array) =
+    [
+        for r = 0 to rowNum - 1 do 
+            let row = rows.[r]
+            for slot in row do 
+                let mutable slotIndex = slot.index
+                for serveur in slot.serveurs do 
+                    yield (serveur.id, r, slotIndex, serveur.pool)
+                    slotIndex <- slotIndex + serveur.size
+    ] 
+    |> List.sortBy (fun (se,r,s,p) -> se)
+    |> List.map (fun (se,r,s,p) -> sprintf "%d %d %d" r s p)
+    |> fun lines -> File.WriteAllLines(path, lines)
