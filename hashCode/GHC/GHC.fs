@@ -13,35 +13,32 @@ open System.Collections.Generic
 //-------------------------------------------------------------------------------------------------
 // EVALUATION
 
+/// returns the garanted capacity for the given rows
 let evaluation poolNum rowNum (rows : Row array) =
-    let capa = Array.init poolNum (fun _ -> Array.create rowNum 0)
-
-    for r = 0 to rowNum - 1 do 
-        let row = rows.[r]
-        for slot in row do 
-            for serveur in slot.servers do 
-                capa.[serveur.pool].[r] <- capa.[serveur.pool].[r] + serveur.capa
-
-    let mutable garan = System.Int32.MaxValue
-    for p = 0 to poolNum - 1 do 
-        let poolCapa = (Array.sum capa.[p]) - (Array.max capa.[p])
-        garan <- min garan poolCapa
-
-    garan
+   // capa[pool][row] contains the cpacity for all the pool*row
+   let capa = Array.init poolNum (fun _ -> Array.create rowNum 0)
+   for r = 0 to rowNum - 1 do 
+      let row = rows.[r]
+      for slot in row do 
+         for server in slot.servers do 
+            capa.[server.pool].[r] <- capa.[server.pool].[r] + server.capa
+   capa
+   |> Array.map (fun capaP -> (Array.sum capaP) - (Array.max capaP) )
+   |> Array.min
 
 //-------------------------------------------------------------------------------------------------
 // MAIN
 
 [<EntryPoint>]
 let main argv =
-    // import
-    let inPath = "../dc.in"
-    let rows,servers,poolNum = import inPath
-    // solution
-    let newRows = solutionGreedy rows servers poolNum
-    // evaluation
-    let score = evaluation poolNum rows.Length newRows
-    printfn "score : %d" score
-    //export 
-    export "../output.txt" poolNum rows.Length servers.Length newRows
-    0 // return an integer exit code
+   // import
+   let inPath = "../dc.in"
+   let rows,servers,poolNum = import inPath
+   // solution
+   let newRows = solutionGreedy rows servers poolNum
+   // evaluation
+   let score = evaluation poolNum rows.Length newRows
+   printfn "score : %d" score
+   //export 
+   export "../output.txt" poolNum rows.Length servers.Length newRows
+   0 // return an integer exit code
