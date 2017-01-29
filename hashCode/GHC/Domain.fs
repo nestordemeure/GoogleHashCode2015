@@ -10,9 +10,9 @@ open GHC.Extensions.Common
 
 //type graph = Dictionary<'key,'Node>
 
-type Server = { size : int ; capa : int }
+type Server = { size : int ; capa : int ; id : int ; pool : int }
 
-type Slots = { index : int ; length : int }
+type Slots = { index : int ; length : int ; serveurs : Server list }
 type Row = Slots list
 
 //-------------------------------------------------------------------------------------------------

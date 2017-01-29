@@ -30,7 +30,7 @@ let main argv =
     let sol = solution rows serveurs poolNum
     // evaluation
     //evaluation sol
-    printfn "score : %d" score
+    printfn "score : %d" sol.garantedCapa
     //export 
-    export "../output.txt" sol
+    //export "../output.txt" (Array.ofList sol.rows)
     0 // return an integer exit code
