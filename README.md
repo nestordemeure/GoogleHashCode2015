@@ -12,7 +12,7 @@ I will try to produce a correct solution (while still not peeking a other partic
 
 One can cut the problem into two parts to make it easier to solve :
 - putting servers in the datacenter to maximise the total capacity (variation of the *knapsack problem*)
-- putting the servers into pools to maximise the garanted capacity (using the *longest task first scheduling*)
+- putting the servers into pools to maximise the garanted capacity
 
 Selecting pools using an approach akind to *longest task first scheduling* was enough to get **314points**.
 

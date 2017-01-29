@@ -82,7 +82,7 @@ let solutionTwoPhases (rows : Row array) (servers:Server array) poolNum =
    let newRows = Array.copy rows
    // put servers in the rows
    servers
-   |> Array.sortByDescending (fun se -> se.size) // bigger first
+   |> Array.sortByDescending (fun se -> (float se.capa) / (float se.size), se.size ) // most_efficient*bigger first
    |> Array.iter (insertServer newRows)
    // put pools in the servers
    newRows
