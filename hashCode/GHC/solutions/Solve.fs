@@ -9,13 +9,21 @@ open GHC.Domain
 //-------------------------------------------------------------------------------------------------
 // GREEDY SERVEUR INSERTION
 
+// let rng = System.Random()
+
 /// how tightly would the server fit in this interval (returns System.Int32.MaxValue if it cannot fit)
 let fitInInterval server interval = 
    if server.size > interval.length then System.Int32.MaxValue else interval.length - server.size
+      (*
+         // noise : allows the code to reach 376points with a bit of luck
+         let result = interval.length - server.size
+         let noise = rng.Next(result/2)
+         result + noise
+      *)
 
 /// how tightly would the server fit in this row (returns System.Int32.MaxValue if it cannot fit)
-let fitInRow server (row : Row) = 
-   row 
+let fitInRow server (row : Row) =
+   row
    |> List.map (fitInInterval server)
    |> List.min
 
@@ -24,10 +32,10 @@ let fitInRow server (row : Row) =
 /// take some intervals and a server, put the serveur where it fit the most tightly
 let insertServerInRow server row =
    let bestInterval = List.minBy (fitInInterval server) row
-   let rec insert row = 
-      match row with 
+   let rec insert row =
+      match row with
       | [] -> []
-      | inter::q when inter <> bestInterval -> 
+      | inter::q when inter <> bestInterval ->
          inter::(insert q)
       | inter::q ->
          {inter with length = inter.length - server.size ; servers = server::inter.servers}::q
@@ -35,8 +43,8 @@ let insertServerInRow server row =
 
 /// take some rows and a server, put the serveur where it fit the most tightly
 let insertServer rows serveur =
-   let bestRow = Array.minBy (fitInRow serveur) rows 
-   if fitInRow serveur bestRow <> System.Int32.MaxValue then 
+   let bestRow = Array.minBy (fitInRow serveur) rows
+   if fitInRow serveur bestRow <> System.Int32.MaxValue then
       let newBestRow = insertServerInRow serveur bestRow
       let i = Array.findIndex (fun r -> r = bestRow) rows
       rows.[i] <- newBestRow
