@@ -10,7 +10,12 @@ open GHC.Extensions.Common
 
 //type graph = Dictionary<'key,'Node>
 
+type Server = { size : int ; capa : int }
+
+type Slots = { index : int ; length : int }
+type Row = Slots list
 
 //-------------------------------------------------------------------------------------------------
 
-
+type Alloc = { row : int ; slot : int ; pool : int }
+type Solution = (Alloc option) array

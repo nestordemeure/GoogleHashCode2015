@@ -24,13 +24,13 @@ let evaluation solution = ()
 let main argv =
     //printfn "%A" argv
     // import
-    let inPath = "../input.in"
-    let r = import inPath
+    let inPath = "../dc.in"
+    let rows,serveurs,poolNum = import inPath
     // solution
-
+    let sol = solution rows serveurs poolNum
     // evaluation
-    evaluation r
+    //evaluation sol
     printfn "score : %d" score
     //export 
-    export "../output.txt" [||]
+    export "../output.txt" sol
     0 // return an integer exit code
