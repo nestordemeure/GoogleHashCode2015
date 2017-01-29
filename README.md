@@ -2,23 +2,25 @@
 
 ## Summary
 
-I tried the problem in conditions (4h to produce the best score possible) but was unable to solve a bug in time (my method to compute the intermediate score would always output 0) so I butchered a greedy solution during the last 30minutes.
+I tried the problem in conditions (4h to produce the best score possible) adapting a personnal algorithm that solves the knapsack problem but was unable to correct a bug in time (my method to compute the intermediate score would always output 0) so I butchered a greedy solution during the last 30minutes.
 
-The greedy solution gave a result worth **136points** (I would have needed 360points to be qualified).
+My quick greedy algorithm gives pools at random and insert the servers as tightly as possible from the bigger to the smaller. It gave a result worth **136points** (I would have needed 360points to be qualified).
 
 ## Extended round 
 
-I will try to produce a correct solution (while still not peeking a other participants solutions nor giving myself much time to code).
-
-One can cut the problem into two parts to make it easier to solve :
-- putting servers in the datacenter to maximise the total capacity (variation of the *knapsack problem*)
+Instead of searching for the best combinaison of pool and row per server at once, one can cut the problem into two parts to make it easier to solve :
+- putting servers in the datacenter to maximise the total capacity
 - putting the servers into pools to maximise the garanted capacity
+
+The best approach to maximise the total capacity is probably to rely on a variant of the *knapsack problem* but here I will still try to implement a solution in a short time (while still not peeking at other participants solutions).
 
 Selecting pools using an approach akind to *longest task first scheduling* was enough to get **314points**.
 
+Changing the criteria for the greedy algorithm from *bigger first* to *(most_efficient,bigger) first* got me to **371points** (enough to get in the final round).
+
 ## Notes
 
-The greedy solution takes time to implement and will not bring many points but it helps debugging everything but the solver and making sure one has some points.
+The greedy solution takes time to implement and is far from optimal but it helps debugging everything and, at least, gives a solution.
 
 I lost litteraly most of my time tracking the bug, it might be easier in group were some peoples can test part of the code while other redact the parts that are still missing.
 
