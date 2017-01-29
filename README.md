@@ -8,6 +8,10 @@ The greedy solution gave a result worth **136points** (I would have needed 360po
 
 ## Notes
 
+The problem could have been cut into two parts to make it more efficient to solve :
+- putting servers in the datacenter to maximise the total capacity (variation of the knapsack problem)
+- putting the servers into pools to maximise the garanted capacity
+
 The greedy solution takes time to implement and will not bring many points but it helps debugging everything but the solver and making sure one has some points.
 
 Tracking the bug alone and under stress proved impossible, it might be easier in group were some peoples can test part of the code while other redact the parts that are still missing.

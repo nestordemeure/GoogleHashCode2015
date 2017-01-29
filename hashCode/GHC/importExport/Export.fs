@@ -15,9 +15,9 @@ let export path poolNum rowNum serverNum (rows : Row array) =
         let row = rows.[r]
         for slot in row do 
             let mutable slotIndex = slot.index
-            for serveur in slot.serveurs do 
-                servers.[serveur.id] <- Some (r, slotIndex, serveur.pool)
-                slotIndex <- slotIndex + serveur.size
+            for server in slot.serveurs do 
+                servers.[server.id] <- Some (r, slotIndex, server.pool)
+                slotIndex <- slotIndex + server.size
     servers
     |> Array.map (function None -> "x" | Some (r,s,p) -> sprintf "%d %d %d" r s p)
     |> fun lines -> File.WriteAllLines(path, lines)

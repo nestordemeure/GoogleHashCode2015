@@ -10,9 +10,6 @@ type State = {fullSize : int ; garantedCapa : Capa ; rows : Row list}
 
 //-------------------------------------------------------------------------------------------------
 
-
-//-------------------------------------------------------------------------------------------------
-
 let buildStates server state poolNum = 
    let state = {state with fullSize = state.fullSize + server.size}
 

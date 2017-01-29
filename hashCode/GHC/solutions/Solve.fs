@@ -6,11 +6,10 @@ open GHC.Extensions
 open GHC.Extensions.Common
 open GHC.Domain
 
-type State = {fullSize : int ; garantedCapa : Capa ; rows : Row list}
-
 //-------------------------------------------------------------------------------------------------
 
-let fitInSlot serveur slot = if serveur.size > slot.length then System.Int32.MaxValue else slot.length - serveur.size
+let fitInSlot serveur slot = 
+      if serveur.size > slot.length then System.Int32.MaxValue else slot.length - serveur.size
 
 let fitInRow serveur (row : Row) = 
       let bestSlot = List.minBy (fitInSlot serveur) row
@@ -27,7 +26,7 @@ let insertServerInRow serveur row =
                   {slot with length = slot.length - serveur.size ; serveurs = serveur::slot.serveurs}::q
       insert row
 
-let insertServer serveur rows =
+let insertServer rows serveur =
       let bestRow = Array.minBy (fitInRow serveur) rows 
       if fitInRow serveur bestRow <> System.Int32.MaxValue then 
             let newBestRow = insertServerInRow serveur bestRow
@@ -38,16 +37,14 @@ let insertServer serveur rows =
 // SOLUTION
 
 /// solution
-let solution (rows : Row array) (serveurs:Server array) poolNum =
+let solutionGreedy (rows : Row array) (serveurs:Server array) poolNum =
       let rng = System.Random()
-      let serveurs =
-            serveurs
-            |> Array.sortByDescending (fun se -> se.size)
-            |> Array.map (fun se -> {se with pool = rng.Next(poolNum) })
-      
-      for serveur in serveurs do 
-            insertServer serveur rows
-      rows
+      let newRows = Array.copy rows
+      serveurs
+      |> Array.sortByDescending (fun se -> se.size) // bigger first
+      |> Array.map (fun se -> {se with pool = rng.Next(poolNum) }) // random pool, no time to be clever
+      |> Array.iter (insertServer newRows)
+      newRows
 
 
 
