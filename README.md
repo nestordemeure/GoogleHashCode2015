@@ -14,4 +14,4 @@ The problem could have been cut into two parts to make it more efficient to solv
 
 The greedy solution takes time to implement and will not bring many points but it helps debugging everything but the solver and making sure one has some points.
 
-Tracking the bug alone and under stress proved impossible, it might be easier in group were some peoples can test part of the code while other redact the parts that are still missing.
+I lost most of my time tracking the bug, it might be easier in group were some peoples can test part of the code while other redact the parts that are still missing.
